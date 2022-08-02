@@ -10,6 +10,6 @@
     {
         public function index ( Request $request )
         {
-            return Inertia::render('Roles/Index');
+            return Inertia::render('Role/Index');
         }
     }

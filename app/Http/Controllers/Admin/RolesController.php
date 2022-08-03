@@ -5,6 +5,7 @@
     use App\Http\Controllers\Controller;
     use App\Http\Requests\StoreRolesRequest;
     use App\Http\Resources\RoleResource;
+    use Illuminate\Database\Eloquent\Builder;
     use Illuminate\Http\RedirectResponse;
     use Illuminate\Http\Request;
     use Inertia\Inertia;
@@ -14,7 +15,10 @@
     {
         public function index ( Request $request )
         {
-            $roles = Role::select([ 'id', 'name', 'created_at' ])->latest('id')->paginate(10);
+            $roles = Role::query()
+                         ->select([ 'id', 'name', 'created_at' ])
+                         ->when($request->name, fn ( Builder $query ) => $query->where('name', 'like', "%{$request->name}%"))
+                         ->latest('id')->paginate(10);
 
             return Inertia::render('Role/Index', [
                 'roles'   => RoleResource::collection($roles),
@@ -32,6 +36,7 @@
                         'name'  => 'actions',
                     ],
                 ],
+                'filters' => (object)$request->all(),
             ]);
         }
 

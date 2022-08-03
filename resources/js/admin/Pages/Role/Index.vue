@@ -8,10 +8,12 @@ import Td from "../../Components/Table/Td.vue";
 import Actions from "../../Components/Table/Actions.vue";
 import Button from "../../Components/Button.vue";
 import Modal from "../../Components/Modal.vue";
-import { ref } from "vue";
+import Label from "../../Components/Label.vue";
+import Input from "../../Components/Input.vue";
+import { onMounted, ref, watch } from "vue";
 import { Inertia } from '@inertiajs/inertia'
 
-defineProps({
+const props = defineProps({
     roles: {
         type: Object,
         default: () => ({}),
@@ -19,6 +21,10 @@ defineProps({
     headers: {
         type: Array,
         default: () => [],
+    },
+    filters: {
+        type: Object,
+        default: () => ({}),
     },
 });
 
@@ -44,6 +50,33 @@ const handleDeleteItem = () => {
         }
     })
 }
+
+const filters = ref({
+    name: ''
+})
+
+const fetchItemsHandler = ref(null);
+const fetchItems = () => {
+    Inertia.get(route('admin.roles.index'), filters.value, {
+        preserveState: true,
+        preserveScroll: true,
+        replace: true,
+    })
+}
+
+onMounted(() => {
+    filters.value = props.filters;
+})
+
+watch(filters, () => {
+    clearTimeout(fetchItemsHandler.value);
+
+    fetchItemsHandler.value = setTimeout(() => {
+        fetchItems();
+    }, 300)
+}, {
+    deep: true
+})
 </script>
 
 <template>
@@ -57,6 +90,16 @@ const handleDeleteItem = () => {
         </template>
 
         <Container>
+            <Card class="mb-4">
+                <template #header>Filters</template>
+                <form class="grid grid-cols-4 gap-8">
+                    <div>
+                        <Label value="Name"/>
+                        <Input v-model="filters.name" class="mt-1 block w-full" type="text"/>
+                    </div>
+                </form>
+            </Card>
+
             <Button :href="route('admin.roles.create')">
                 Add
             </Button>

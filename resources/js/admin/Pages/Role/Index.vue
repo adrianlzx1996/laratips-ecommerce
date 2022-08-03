@@ -10,11 +10,15 @@ import Button from "../../Components/Button.vue";
 import Modal from "../../Components/Modal.vue";
 import Label from "../../Components/Label.vue";
 import Input from "../../Components/Input.vue";
-import { onMounted, ref, watch } from "vue";
-import { Inertia } from '@inertiajs/inertia'
+import useDeleteItem from "../../Composables/useDeleteItem";
+import useFilters from "../../Composables/useFilters";
 
 const props = defineProps({
-    roles: {
+    title: {
+        type: String,
+        required: true,
+    },
+    items: {
         type: Object,
         default: () => ({}),
     },
@@ -26,66 +30,30 @@ const props = defineProps({
         type: Object,
         default: () => ({}),
     },
+    routeResourceName: {
+        type: String,
+        required: true,
+    }
 });
 
-const deleteModal = ref(false);
-const itemToDelete = ref({})
-const isDeleting = ref(false);
-const showDeleteModal = (item) => {
-    deleteModal.value = true;
-    itemToDelete.value = item;
-}
+const {
+    deleteModal,
+    itemToDelete,
+    isDeleting,
+    showDeleteModal,
+    handleDeleteItem
+} = useDeleteItem({routeResourceName: props.routeResourceName})
 
-const handleDeleteItem = () => {
-    Inertia.delete(route("admin.roles.destroy", {id: itemToDelete.value.id}), {
-        onBefore: () => {
-            isDeleting.value = true;
-        },
-        onSuccess: () => {
-            deleteModal.value = false;
-            itemToDelete.value = {};
-        },
-        onFinish: () => {
-            isDeleting.value = false;
-        }
-    })
-}
-
-const filters = ref({
-    name: ''
-})
-
-const fetchItemsHandler = ref(null);
-const fetchItems = () => {
-    Inertia.get(route('admin.roles.index'), filters.value, {
-        preserveState: true,
-        preserveScroll: true,
-        replace: true,
-    })
-}
-
-onMounted(() => {
-    filters.value = props.filters;
-})
-
-watch(filters, () => {
-    clearTimeout(fetchItemsHandler.value);
-
-    fetchItemsHandler.value = setTimeout(() => {
-        fetchItems();
-    }, 300)
-}, {
-    deep: true
-})
+const {filters} = useFilters({filters: props.filters, routeResourceName: props.routeResourceName})
 </script>
 
 <template>
-    <Head title="Roles"/>
+    <Head :title="title"/>
 
     <BreezeAuthenticatedLayout>
         <template #header>
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                Roles
+                {{ title }}
             </h2>
         </template>
 
@@ -100,16 +68,16 @@ watch(filters, () => {
                 </form>
             </Card>
 
-            <Button :href="route('admin.roles.create')">
+            <Button :href="route(`admin.${routeResourceName}.create`)">
                 Add
             </Button>
             <Card class="mt-4">
-                <Table :headers="headers" :items="roles">
+                <Table :headers="headers" :items="items">
                     <template v-slot="{ item }">
                         <Td>{{ item.name }}</Td>
                         <Td>{{ item.created_at_formatted }}</Td>
                         <Td>
-                            <Actions :edit-link="route('admin.roles.edit', item.id)"
+                            <Actions :edit-link="route(`admin.${routeResourceName}.edit`, item.id)"
                                      @deleteClicked="showDeleteModal(item)"/>
                         </Td>
                     </template>

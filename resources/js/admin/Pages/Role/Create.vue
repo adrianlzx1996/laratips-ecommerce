@@ -1,12 +1,12 @@
 <script setup>
 import BreezeAuthenticatedLayout from '@/Layouts/Authenticated.vue';
-import Container from '@/Components/Container.vue';
-import Card from '@/Components/Card/Card.vue';
+import Container from '../../Components/Container.vue';
+import Card from '../../Components/Card/Card.vue';
 import { Head, useForm } from '@inertiajs/inertia-vue3';
 import Button from "../../Components/Button.vue";
-import BreezeInput from '@/Components/Input.vue';
-import BreezeLabel from '@/Components/Label.vue';
-import InputError from "@/Components/InputError.vue";
+import BreezeInput from '../../Components/Input.vue';
+import BreezeLabel from '../../Components/Label.vue';
+import InputError from "../../Components/InputError.vue";
 import { onMounted } from "vue";
 
 const form = useForm({
@@ -60,7 +60,7 @@ const props = defineProps({
                         <BreezeLabel for="name" value="Name"/>
                         <BreezeInput id="name" v-model="form.name" autocomplete="name" autofocus
                                      class="mt-1 block w-full"
-                                     required/>
+                                     required type="text"/>
 
                         <InputError :message="form.errors.name" class="mt-1"/>
                     </div>

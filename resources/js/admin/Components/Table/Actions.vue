@@ -23,7 +23,7 @@ defineProps({
                 <Edit class="w-4 h-4"></Edit>
             </Link>
         </button>
-        <button v-if="showDeleteLink">
+        <button v-if="showDeleteLink" @click="$emit('deleteClicked', $event)">
             <Delete class="w-4 h-4"></Delete>
         </button>
     </div>

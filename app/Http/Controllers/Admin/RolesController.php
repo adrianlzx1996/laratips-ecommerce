@@ -66,7 +66,7 @@
             return redirect()->route('admin.roles.index')->with('success', 'Role updated successfully.');
         }
 
-        public function delete ( Role $role )
+        public function destroy ( Role $role )
         {
             $role->delete();
 

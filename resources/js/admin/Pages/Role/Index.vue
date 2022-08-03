@@ -6,6 +6,7 @@ import { Head } from '@inertiajs/inertia-vue3';
 import Table from "../../Components/Table/Table.vue";
 import Td from "../../Components/Table/Td.vue";
 import Actions from "../../Components/Table/Actions.vue";
+import Button from "../../Components/Button.vue";
 
 defineProps({
     roles: {
@@ -30,13 +31,16 @@ defineProps({
         </template>
 
         <Container>
-            <Card>
+            <Button :href="route('admin.roles.create')">
+                Add
+            </Button>
+            <Card class="mt-4">
                 <Table :headers="headers" :items="roles">
                     <template v-slot="{ item }">
                         <Td>{{ item.name }}</Td>
                         <Td>{{ item.created_at_formatted }}</Td>
                         <Td>
-                            <Actions :show-delete-link="false"/>
+                            <Actions :edit-link="route('admin.roles.edit', item.id)"/>
                         </Td>
                     </template>
                 </Table>

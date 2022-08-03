@@ -1,5 +1,7 @@
 <script setup>
 
+import Td from "./Td.vue";
+
 defineProps({
     headers: {
         type: Array,
@@ -25,6 +27,9 @@ defineProps({
                     <tbody>
                     <tr v-for="item in items.data" :key="item.id" class="border-b">
                         <slot :item="item"/>
+                    </tr>
+                    <tr v-if="items.data.length === 0">
+                        <Td :colspan="headers.length" class="text-center">No data available.</Td>
                     </tr>
                     </tbody>
                 </table>

@@ -13,6 +13,8 @@
 
     class RolesController extends Controller
     {
+        private string $routeResourceName = 'roles';
+
         public function index ( Request $request )
         {
             $roles = Role::query()
@@ -21,8 +23,9 @@
                          ->latest('id')->paginate(10);
 
             return Inertia::render('Role/Index', [
-                'roles'   => RoleResource::collection($roles),
-                'headers' => [
+                'title'             => 'Roles',
+                'items'             => RoleResource::collection($roles),
+                'headers'           => [
                     [
                         'label' => 'Name',
                         'name'  => 'Name',
@@ -36,7 +39,8 @@
                         'name'  => 'actions',
                     ],
                 ],
-                'filters' => (object)$request->all(),
+                'filters'           => (object)$request->all(),
+                'routeResourceName' => $this->routeResourceName,
             ]);
         }
 

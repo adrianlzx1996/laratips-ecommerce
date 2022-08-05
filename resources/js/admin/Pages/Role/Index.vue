@@ -44,7 +44,7 @@ const {
     handleDeleteItem
 } = useDeleteItem({routeResourceName: props.routeResourceName})
 
-const {filters} = useFilters({filters: props.filters, routeResourceName: props.routeResourceName})
+const {filters, isLoading} = useFilters({filters: props.filters, routeResourceName: props.routeResourceName})
 </script>
 
 <template>
@@ -71,7 +71,7 @@ const {filters} = useFilters({filters: props.filters, routeResourceName: props.r
             <Button :href="route(`admin.${routeResourceName}.create`)">
                 Add
             </Button>
-            <Card class="mt-4">
+            <Card :is-loading="isLoading" class="mt-4">
                 <Table :headers="headers" :items="items">
                     <template v-slot="{ item }">
                         <Td>{{ item.name }}</Td>

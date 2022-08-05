@@ -8,12 +8,19 @@ export default function (params) {
         name: ''
     })
 
+    const isLoading = ref(false);
     const fetchItemsHandler = ref(null);
     const fetchItems = () => {
         Inertia.get(route(`admin.${routeResourceName}.index`), filters.value, {
             preserveState: true,
             preserveScroll: true,
             replace: true,
+            onBefore: visit => {
+                isLoading.value = true;
+            },
+            onFinish: visit => {
+                isLoading.value = false;
+            },
         })
     }
 
@@ -32,6 +39,6 @@ export default function (params) {
     })
 
     return {
-        filters
+        filters, isLoading
     }
 }

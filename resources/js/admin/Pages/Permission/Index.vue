@@ -8,10 +8,9 @@ import Td from "../../Components/Table/Td.vue";
 import Actions from "../../Components/Table/Actions.vue";
 import Button from "../../Components/Button.vue";
 import Modal from "../../Components/Modal.vue";
-import Label from "../../Components/Label.vue";
-import Input from "../../Components/Input.vue";
 import useDeleteItem from "../../Composables/useDeleteItem";
 import useFilters from "../../Composables/useFilters";
+import Filters from "../Permission/Filters.vue";
 
 const props = defineProps({
     title: {
@@ -58,15 +57,7 @@ const {filters, isLoading} = useFilters({filters: props.filters, routeResourceNa
         </template>
 
         <Container>
-            <Card class="mb-4">
-                <template #header>Filters</template>
-                <form class="grid grid-cols-4 gap-8">
-                    <div>
-                        <Label value="Name"/>
-                        <Input v-model="filters.name" class="mt-1 block w-full" type="text"/>
-                    </div>
-                </form>
-            </Card>
+            <Filters v-model="filters"/>
 
             <Button :href="route(`admin.${routeResourceName}.create`)">
                 Add

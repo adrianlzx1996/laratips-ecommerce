@@ -37,6 +37,10 @@ const showingNavigationDropdown = ref(false);
                                                :href="route('admin.roles.index')">
                                     Roles
                                 </BreezeNavLink>
+                                <BreezeNavLink :active="route().current('admin.permissions.index')"
+                                               :href="route('admin.permissions.index')">
+                                    Permissions
+                                </BreezeNavLink>
                             </div>
                         </div>
 

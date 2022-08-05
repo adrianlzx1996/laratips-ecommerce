@@ -5,6 +5,7 @@
     use App\Http\Controllers\Controller;
     use App\Http\Requests\StorePermissionsRequest;
     use App\Http\Resources\PermissionResource;
+    use Illuminate\Database\Eloquent\Builder;
     use Illuminate\Http\Request;
     use Inertia\Inertia;
     use Spatie\Permission\Models\Permission;

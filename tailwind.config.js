@@ -15,6 +15,16 @@ module.exports = {
             fontFamily: {
                 sans: ["Nunito", ...defaultTheme.fontFamily.sans],
             },
+            animation: {
+                'progress': 'progress 3s ease-in-out infinite',
+            },
+            keyframes: {
+                progress: {
+                    '0%, 100%': {width: '0%', marginLeft: '0%'},
+                    '20%': {marginLeft: '0%'},
+                    '100%': {width: '100%', marginLeft: '100%'},
+                }
+            },
         },
     },
 

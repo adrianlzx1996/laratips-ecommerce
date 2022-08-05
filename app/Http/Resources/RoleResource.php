@@ -11,7 +11,7 @@
          *
          * @param \Illuminate\Http\Request $request
          *
-         * @return array|\Illuminate\Contracts\Support\Arrayable|\JsonSerializable
+         * @return array
          */
         public function toArray ( $request )
         {
@@ -21,6 +21,7 @@
                 'created_at_formatted' => $this->when($this->created_at, function () {
                     return $this->created_at->toDayDateTimeString();
                 }),
+                'permissions'          => PermissionResource::collection($this->whenLoaded('permissions')),
             ];
         }
     }

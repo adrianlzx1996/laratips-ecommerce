@@ -8,6 +8,7 @@ import BreezeInput from '../../Components/Input.vue';
 import BreezeLabel from '../../Components/Label.vue';
 import InputError from "../../Components/InputError.vue";
 import { onMounted } from "vue";
+import Permissions from "./Permissions.vue";
 
 const form = useForm({
     name: ''
@@ -43,7 +44,11 @@ const props = defineProps({
     routeResourceName: {
         type: String,
         required: true,
-    }
+    },
+    permissions: {
+        type: Array,
+        default: () => [],
+    },
 })
 </script>
 
@@ -77,6 +82,8 @@ const props = defineProps({
                 </form>
             </Card>
         </Container>
+
+        <Permissions v-if="edit" :permissions="permissions" :role="item"/>
     </BreezeAuthenticatedLayout>
 </template>
 

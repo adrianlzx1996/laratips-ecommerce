@@ -15,15 +15,15 @@ const form = useForm({
 
 const submit = () => {
     props.edit
-        ? form.put(route('admin.roles.update', {id: props.role.id, name: form.name}))
-        : form.post(route('admin.roles.store'), {
+        ? form.put(route(`admin.${props.routeResourceName}.update`, {id: props.item.id, name: form.name}))
+        : form.post(route(`admin.${props.routeResourceName}.store`), {
             onFinish: () => form.reset('name'),
         });
 }
 
 onMounted(() => {
     if (props.edit) {
-        form.name = props.role.name
+        form.name = props.item.name
     }
 });
 
@@ -36,9 +36,13 @@ const props = defineProps({
         type: Boolean,
         default: false,
     },
-    role: {
+    item: {
         type: Object,
         default: () => ({}),
+    },
+    routeResourceName: {
+        type: String,
+        required: true,
     }
 })
 </script>

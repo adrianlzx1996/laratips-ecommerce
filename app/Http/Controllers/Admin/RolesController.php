@@ -54,17 +54,19 @@
         public function create ()
         {
             return Inertia::render('Role/Create', [
-                'edit'  => false,
-                'title' => 'Add Role',
+                'edit'              => false,
+                'title'             => 'Add Role',
+                'routeResourceName' => $this->routeResourceName,
             ]);
         }
 
         public function edit ( Role $role )
         {
             return Inertia::render('Role/Create', [
-                'edit'  => true,
-                'role'  => new RoleResource($role),
-                'title' => 'Edit Role',
+                'edit'              => true,
+                'item'              => new RoleResource($role),
+                'title'             => 'Edit Role',
+                'routeResourceName' => $this->routeResourceName,
             ]);
         }
 

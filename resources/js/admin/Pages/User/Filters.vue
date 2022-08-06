@@ -1,14 +1,15 @@
 <script setup>
 import Card from '@/Components/Card/Card.vue';
-import Label from '@/Components/Label.vue';
-import Input from '@/Components/Input.vue';
+import InputGroup from '@/Components/InputGroup.vue';
 import { ref, watch } from "vue";
+import SelectGroup from "../../Components/SelectGroup.vue";
 
 const props = defineProps({
     modelValue: {
         type: Object,
         default: () => ({}),
     },
+    roles: Array
 })
 
 const emits = defineEmits(["update:modelValue"])
@@ -17,6 +18,8 @@ const filters = ref({...props.modelValue})
 
 watch(filters, (value) => {
     emits("update:modelValue", filters.value)
+}, {
+    deep: true
 })
 </script>
 
@@ -24,10 +27,9 @@ watch(filters, (value) => {
     <Card class="mb-4">
         <template #header>Filters</template>
         <form class="grid grid-cols-4 gap-8">
-            <div>
-                <Label value="Name"/>
-                <Input v-model="modelValue.name" class="mt-1 block w-full" type="text"/>
-            </div>
+            <InputGroup v-model="filters.name" label="Name"/>
+            <InputGroup v-model="filters.email" label="Email" type="email"/>
+            <SelectGroup v-model="filters.roleId" :items="roles" label="Role"/>
         </form>
     </Card>
 </template>

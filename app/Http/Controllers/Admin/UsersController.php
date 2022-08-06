@@ -35,6 +35,14 @@
                          ->select([ 'id', 'name', 'email', 'created_at' ])
                          ->with([ 'roles:roles.id,roles.name' ])
                          ->when($request->name, fn ( Builder $query ) => $query->where('name', 'like', "%{$request->name}%"))
+                         ->when($request->email, fn ( Builder $query ) => $query->where('email', 'like', "%{$request->email}%"))
+                         ->when(
+                             $request->roleId,
+                             fn ( Builder $query, $roleId ) => $query->whereHas(
+                                 'roles',
+                                 fn ( Builder $builder ) => $builder->where('roles.id', $roleId)
+                             )
+                         )
                          ->latest('id')->paginate(10);
 
             return Inertia::render('User/Index', [
@@ -64,6 +72,7 @@
                 ],
                 'filters'           => (object)$request->all(),
                 'routeResourceName' => $this->routeResourceName,
+                'roles'             => RoleResource::collection(Role::get([ 'id', 'name' ])),
                 'can'               => [
                     'view'   => $request->user()->can("view {$this->routeResourceName} list"),
                     'create' => $request->user()->can('create user'),

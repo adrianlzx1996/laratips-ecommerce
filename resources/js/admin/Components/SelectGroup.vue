@@ -6,9 +6,18 @@ import InputError from "./InputError.vue";
 
 const props = defineProps({
     modelValue: {},
-    type: {
+    items: Array,
+    itemLabel: {
         type: String,
-        default: 'text',
+        default: 'name',
+    },
+    itemValue: {
+        type: String,
+        default: 'id',
+    },
+    withoutSelect: {
+        type: Boolean,
+        default: false,
     },
     label: {
         type: String,
@@ -25,8 +34,9 @@ const props = defineProps({
     <div>
         <Label v-if="label" :value="label"/>
 
-        <Select :model-value="modelValue" class="mt-1" v-bind="$attrs"
-                @update:model-value="$emit('update:modelValue', $event)"/>
+        <Select :item-label="itemLabel" :item-value="itemValue" :items="items" :model-value="modelValue"
+                :without-select="withoutSelect" class="mt-1"
+                v-bind="$attrs" @update:model-value="$emit('update:modelValue', $event)"/>
 
         <InputError v-if="errorMessage" :message="errorMessage" class="mt-1"/>
     </div>

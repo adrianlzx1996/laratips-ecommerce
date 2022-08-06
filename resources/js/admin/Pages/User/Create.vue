@@ -87,7 +87,7 @@ const props = defineProps({
 
                         <SelectGroup v-model="form.roleId" :error-message="form.errors.roleId"
                                      :items="roles"
-                                     label="Role" required type="password"/>
+                                     label="Role" required/>
                     </div>
 
                     <div class="mt-4">

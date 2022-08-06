@@ -44,7 +44,7 @@ onMounted(() => {
 
 <template>
     <select ref="select" :value="modelValue"
-            class="border-gray-300 forcus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm w-full block"
+            class="border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm w-full block"
             @input="$emit('update:modelValue', $event.target.value)">
         <option v-for="item in options" :key="item[itemValue]" :value="item[itemValue]">
             {{ item[itemLabel] }}

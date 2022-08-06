@@ -11,6 +11,7 @@ import Modal from "../../Components/Modal.vue";
 import useDeleteItem from "../../Composables/useDeleteItem";
 import useFilters from "../../Composables/useFilters";
 import Filters from "./Filters.vue";
+import AddNew from "../../Components/AddNew.vue";
 
 const props = defineProps({
     title: {
@@ -46,6 +47,7 @@ const {
 } = useDeleteItem({routeResourceName: props.routeResourceName})
 
 const {filters, isLoading} = useFilters({filters: props.filters, routeResourceName: props.routeResourceName})
+
 </script>
 
 <template>
@@ -59,17 +61,23 @@ const {filters, isLoading} = useFilters({filters: props.filters, routeResourceNa
         </template>
 
         <Container>
-            <Filters v-model="filters" :categories="rootCategories"/>
+            <AddNew>
+                <Button v-if="can.create" :href="route(`admin.${routeResourceName}.create`)">
+                    Add
+                </Button>
 
-            <Button v-if="can.create" :href="route(`admin.${routeResourceName}.create`)">
-                Add
-            </Button>
+                <template #filter>
+                    <Filters v-model="filters" :categories="rootCategories" class="mt-4"/>
+                </template>
+            </AddNew>
+
             <Card :is-loading="isLoading" class="mt-4">
                 <Table :headers="headers" :items="items">
                     <template v-slot="{ item }">
                         <Td>{{ item.name }}</Td>
                         <Td>
-                            <Button v-if="item.children_count > 0" :href="route(`admin.${routeResourceName}.index`, {parent_id: item.id})"
+                            <Button v-if="item.children_count > 0"
+                                    :href="route(`admin.${routeResourceName}.index`, {parent_id: item.id})"
                                     small>
                                 {{ item.children_count }}
                             </Button>

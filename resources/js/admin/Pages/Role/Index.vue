@@ -11,6 +11,7 @@ import Modal from "../../Components/Modal.vue";
 import useDeleteItem from "../../Composables/useDeleteItem";
 import useFilters from "../../Composables/useFilters";
 import Filters from "./Filters.vue";
+import AddNew from "../../Components/AddNew.vue";
 
 const props = defineProps({
     title: {
@@ -58,11 +59,15 @@ const {filters, isLoading} = useFilters({filters: props.filters, routeResourceNa
         </template>
 
         <Container>
-            <Filters v-model="filters"/>
 
-            <Button v-if="can.create" :href="route(`admin.${routeResourceName}.create`)">
-                Add
-            </Button>
+            <AddNew>
+                <Button v-if="can.create" :href="route(`admin.${routeResourceName}.create`)">
+                    Add
+                </Button>
+                <template #filter>
+                    <Filters v-model="filters" class="mt-4"/>
+                </template>
+            </AddNew>
             <Card v-if="can.view" :is-loading="isLoading" class="mt-4">
                 <Table :headers="headers" :items="items">
                     <template v-slot="{ item }">

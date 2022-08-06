@@ -8,6 +8,16 @@
 
     class AttachPermissionToRoleController extends Controller
     {
+        public function __construct ()
+        {
+            $this->middleware('can:edit role');
+        }
+
+        /**
+         * Display a listing of the resource.
+         *
+         * @return \Illuminate\Http\RedirectResponse
+         */
         public function __invoke ( Request $request )
         {
             $permission = Permission::findById($request->permissionId);

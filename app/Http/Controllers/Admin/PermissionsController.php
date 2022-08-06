@@ -71,7 +71,7 @@
         : \Illuminate\Http\RedirectResponse {
             $permission = Permission::create($request->validated());
 
-            return redirect()->route('admin.permissions.index')->with('success', 'Permission created successfully.');
+            return redirect()->route("admin.{$this->routeResourceName}.index")->with('success', 'Permission created successfully.');
         }
 
         /**
@@ -135,7 +135,7 @@
             $permission = Permission::findOrFail($id);
             $permission->update($request->validated());
 
-            return redirect()->route('admin.permissions.index')->with('success', 'Permission updated successfully.');
+            return redirect()->route("admin.{$this->routeResourceName}.index")->with('success', 'Permission updated successfully.');
         }
 
         /**
@@ -149,6 +149,6 @@
         : \Illuminate\Http\RedirectResponse {
             Permission::findOrFail($id)->delete();
 
-            return redirect()->route('admin.permissions.index')->with('success', 'Permission deleted successfully.');
+            return redirect()->route("admin.{$this->routeResourceName}.index")->with('success', 'Permission deleted successfully.');
         }
     }

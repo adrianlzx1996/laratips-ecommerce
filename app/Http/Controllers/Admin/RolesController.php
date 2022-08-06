@@ -62,7 +62,7 @@
         : RedirectResponse {
             $role = Role::create($request->validated());
 
-            return redirect()->route('admin.roles.index')->with('success', 'Role created successfully.');
+            return redirect()->route("admin.{$this->routeResourceName}.index")->with('success', 'Role created successfully.');
         }
 
         public function create ()
@@ -91,7 +91,7 @@
         {
             $role->update($request->all());
 
-            return redirect()->route('admin.roles.index')->with('success', 'Role updated successfully.');
+            return redirect()->route("admin.{$this->routeResourceName}.index")->with('success', 'Role updated successfully.');
         }
 
         public function destroy ( Role $role )

@@ -32,7 +32,8 @@ const props = defineProps({
     routeResourceName: {
         type: String,
         required: true,
-    }
+    },
+    can: Object,
 });
 
 const {
@@ -59,16 +60,18 @@ const {filters, isLoading} = useFilters({filters: props.filters, routeResourceNa
         <Container>
             <Filters v-model="filters"/>
 
-            <Button :href="route(`admin.${routeResourceName}.create`)">
+            <Button v-if="can.create" :href="route(`admin.${routeResourceName}.create`)">
                 Add
             </Button>
-            <Card :is-loading="isLoading" class="mt-4">
+            <Card v-if="can.view" :is-loading="isLoading" class="mt-4">
                 <Table :headers="headers" :items="items">
                     <template v-slot="{ item }">
                         <Td>{{ item.name }}</Td>
                         <Td>{{ item.created_at_formatted }}</Td>
                         <Td>
                             <Actions :edit-link="route(`admin.${routeResourceName}.edit`, item.id)"
+                                     :show-delete-link="item.can.delete"
+                                     :show-edit-link="item.can.edit"
                                      @deleteClicked="showDeleteModal(item)"/>
                         </Td>
                     </template>

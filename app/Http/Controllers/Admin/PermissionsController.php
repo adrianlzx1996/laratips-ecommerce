@@ -45,6 +45,10 @@
                 ],
                 'filters'           => (object)$request->all(),
                 'routeResourceName' => $this->routeResourceName,
+                'can'               => [
+                    'view'   => $request->user()->can('view permissions list'),
+                    'create' => $request->user()->can('create permission'),
+                ],
             ]);
         }
 

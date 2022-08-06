@@ -29,17 +29,11 @@ const showingNavigationDropdown = ref(false);
 
                             <!-- Navigation Links -->
                             <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                                <BreezeNavLink :active="route().current('admin.dashboard')"
-                                               :href="route('admin.dashboard')">
-                                    Dashboard
-                                </BreezeNavLink>
-                                <BreezeNavLink :active="route().current('admin.roles.index')"
-                                               :href="route('admin.roles.index')">
-                                    Roles
-                                </BreezeNavLink>
-                                <BreezeNavLink :active="route().current('admin.permissions.index')"
-                                               :href="route('admin.permissions.index')">
-                                    Permissions
+                                <BreezeNavLink v-for="menu in $page.props.menus" v-show="menu.isVisible"
+                                               :key="menu.label"
+                                               :active="menu.isActive"
+                                               :href="menu.url">
+                                    {{ menu.label }}
                                 </BreezeNavLink>
                             </div>
                         </div>

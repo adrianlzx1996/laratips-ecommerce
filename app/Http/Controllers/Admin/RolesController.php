@@ -43,6 +43,10 @@
                 ],
                 'filters'           => (object)$request->all(),
                 'routeResourceName' => $this->routeResourceName,
+                'can'               => [
+                    'view'   => $request->user()->can('view roles list'),
+                    'create' => $request->user()->can('create role'),
+                ],
             ]);
         }
 

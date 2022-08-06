@@ -20,13 +20,13 @@
             User::factory()->create([
                                         'name'     => 'Admin',
                                         'email'    => 'admin@admin.com',
-                                        'password' => bcrypt('password'),
+                                        'password' => 'password',
                                     ]);
 
             User::factory()->create([
                                         'name'     => 'Editor',
                                         'email'    => 'editor@editor.com',
-                                        'password' => bcrypt('password'),
+                                        'password' => 'password',
                                     ]);
 
             $this->call(RolesSeeder::class);

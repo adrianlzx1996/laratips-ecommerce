@@ -22,7 +22,6 @@
                     return $this->created_at->toDayDateTimeString();
                 }),
                 'can'                  => [
-                    'create' => $request->user()->can('create permission'),
                     'edit'   => $request->user()->can('edit permission'),
                     'delete' => $request->user()->can('delete permission'),
                 ],

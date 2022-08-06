@@ -23,7 +23,6 @@
                 }),
                 'permissions'          => PermissionResource::collection($this->whenLoaded('permissions')),
                 'can'                  => [
-                    'create' => $request->user()->can('create role'),
                     'edit'   => $request->user()->can('edit role'),
                     'delete' => $request->user()->can('delete role'),
                 ],

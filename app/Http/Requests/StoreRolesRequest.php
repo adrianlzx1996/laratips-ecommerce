@@ -4,6 +4,7 @@
 
     use Illuminate\Foundation\Http\FormRequest;
     use Illuminate\Validation\Rule;
+    use Spatie\Permission\Models\Role;
 
     class StoreRolesRequest extends FormRequest
     {
@@ -25,11 +26,11 @@
         public function rules ()
         {
             $model = $this->route('role');
-            
+
             return [
                 'name' => [
                     'required', 'string', 'max:255',
-                    Rule::unique('roles')->ignore($model->id ?? null),
+                    Rule::unique(Role::class)->ignore($model->id ?? null),
                 ],
             ];
         }

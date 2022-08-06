@@ -10,7 +10,7 @@ import Button from "../../Components/Button.vue";
 import Modal from "../../Components/Modal.vue";
 import useDeleteItem from "../../Composables/useDeleteItem";
 import useFilters from "../../Composables/useFilters";
-import Filters from "../Permission/Filters.vue";
+import Filters from "./Filters.vue";
 
 const props = defineProps({
     title: {

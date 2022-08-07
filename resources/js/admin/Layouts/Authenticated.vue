@@ -92,8 +92,11 @@ const showingNavigationDropdown = ref(false);
                 <div :class="{'block': showingNavigationDropdown, 'hidden': ! showingNavigationDropdown}"
                      class="sm:hidden">
                     <div class="pt-2 pb-3 space-y-1">
-                        <BreezeResponsiveNavLink :active="route().current('dashboard')" :href="route('dashboard')">
-                            Dashboard
+                        <BreezeResponsiveNavLink v-for="menu in $page.props.menus" v-show="menu.isVisible"
+                                                 :key="menu.label"
+                                                 :active="menu.isActive"
+                                                 :href="menu.url">
+                            {{ menu.label }}
                         </BreezeResponsiveNavLink>
                     </div>
 

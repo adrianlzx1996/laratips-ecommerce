@@ -47,6 +47,12 @@
             Permission::create([ 'name' => 'create category' ]);
             Permission::create([ 'name' => 'edit category' ]);
             Permission::create([ 'name' => 'delete category' ]);
+
+            Permission::create([ 'name' => 'view products module' ]);
+            Permission::create([ 'name' => 'view products list' ]);
+            Permission::create([ 'name' => 'create product' ]);
+            Permission::create([ 'name' => 'edit product' ]);
+            Permission::create([ 'name' => 'delete product' ]);
         }
 
     }

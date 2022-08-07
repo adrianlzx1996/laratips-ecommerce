@@ -30,5 +30,6 @@
                                     ]);
 
             $this->call(RolesSeeder::class);
+            $this->call(ProductSeeder::class);
         }
     }
